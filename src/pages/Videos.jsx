@@ -1,7 +1,31 @@
 import React from "react";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import VideoCard from "../components/VideoCard";
 
 export default function Videos() {
   const { keyword } = useParams(); // 검색 keyword를 찾기 위한 useParam
-  return <div>{keyword ? `🔍${keyword}` : "🔥"}</div>;
+  const {
+    isLoading,
+    error,
+    data: videos,
+  } = useQuery(["videos", keyword], async () => {
+    return fetch(`/videos/${keyword ? "search" : "popular"}.json`)
+      .then((res) => res.json())
+      .then((data) => data.items);
+  });
+  return (
+    <>
+      <div>{keyword ? `🔍${keyword}` : "🔥"}</div>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Something is wrong 👻</p>}
+      {videos && (
+        <ul>
+          {videos.map((video) => (
+            <VideoCard key={video.id} video={video} />
+          ))}
+        </ul>
+      )}
+    </>
+  );
 }
