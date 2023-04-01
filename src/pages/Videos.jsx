@@ -1,20 +1,20 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-// import FakeYoutube from "../\bapi/fakeYoutube";
-import Youtube from "../\bapi/youtube";
+import FakeYoutube from "../\bapi/fakeYoutube";
+// import Youtube from "../\bapi/youtube";
 import VideoCard from "../components/VideoCard";
+import { useYoutubeApi } from "../context/YoutubeApiContext";
 
 export default function Videos() {
   const { keyword } = useParams(); // 검색 keyword를 찾기 위한 useParam
+  const { youtube } = useYoutubeApi();
   const {
     isLoading,
     error,
     data: videos,
   } = useQuery(["videos", keyword], () => {
-    const youtube = new Youtube();
-    // const youtube = new FakeYoutube();
-    return youtube.search(keyword);
+    youtube.search(keyword);
   });
   return (
     <>
