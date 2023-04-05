@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import FakeYoutube from "../\bapi/fakeYoutube";
+// import FakeYoutube from "../\bapi/fakeYoutube";
 // import Youtube from "../\bapi/youtube";
 import VideoCard from "../components/VideoCard";
 import { useYoutubeApi } from "../context/YoutubeApiContext";
@@ -13,12 +13,11 @@ export default function Videos() {
     isLoading,
     error,
     data: videos,
-  } = useQuery(["videos", keyword], () => {
-    youtube.search(keyword);
-  });
+  } = useQuery(["videos", keyword], () => youtube.search(keyword));
+  console.log("test2", isLoading, error, videos);
   return (
     <>
-      <div>{keyword ? `🔍${keyword}` : "🔥"}</div>
+      <div>Videos {keyword ? `🔍${keyword}` : "🔥"}</div>
       {isLoading && <p>Loading...</p>}
       {error && <p>Something is wrong 👻</p>}
       {videos && (
