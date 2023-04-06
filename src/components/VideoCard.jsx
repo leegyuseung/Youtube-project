@@ -9,7 +9,7 @@ export default function VideoCard({ video }) {
     <li
       onClick={() => {
         // 두번 째 인자로 데이터를 보내준다.
-        navigate(`videos/watch/${video.id}`, { state: { video } });
+        navigate(`/videos/watch/${video.id}`, { state: { video } });
       }}
     >
       <img className="w-full" src={thumbnails.medium.url} alt={title} />
